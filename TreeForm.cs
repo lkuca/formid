@@ -25,6 +25,7 @@ namespace formid
             tree.Dock = DockStyle.Left;
             tree.BorderStyle= BorderStyle.Fixed3D;
             tree.AfterSelect += Tree_AfterSelect;
+            
             TreeNode treeNode= new TreeNode("Elemendid");
             treeNode.Nodes.Add(new TreeNode("Nupp-Button"));
             btn = new Button();
@@ -55,6 +56,7 @@ namespace formid
             txt.Text = "...";
             txt.Visible = false;
             txt.Location = new Point(tree.Width, btn.Top + btn.Height + 5);
+            txt.KeyDown += new KeyEventHandler(Text_Box_KeyDown);
             this.Controls.Add(txt);
             txt.Visible = false;
             treeNode.Nodes.Add(new TreeNode("Radionupp"));
@@ -70,20 +72,75 @@ namespace formid
             r2.CheckedChanged += new EventHandler(RadioButtons_Changed);
             this.Controls.Add(r1);
             this.Controls.Add(r2);
-                
+            treeNode.Nodes.Add(new TreeNode("CheckBox"));
+            c1 = new CheckBox();
+            c1.Text = "Valik 1.1";
+            c1.Location = new Point(tree.Width, r1.Top + r1.Height + 5);
+            c1.CheckedChanged += new EventHandler(CheckBoxes_Changed);
+            c2 = new CheckBox();
+            c2.Text = "Valik 2.2";
+            c2.Location = new Point(c1.Location.X + c1.Width, r1.Top + r1.Height + 5);
+            c1.CheckedChanged += new EventHandler(CheckBoxes_Changed);
 
 
             tree.Nodes.Add(treeNode);
             this.Controls.Add(tree);
             this.Controls.Add(btn);
             this.Controls.Add(lbl);
+            this.Controls.Add(c1);
+            this.Controls.Add(c2);
             
-            
+        }
+
+        private void CheckBoxes_Changed(object? sender, EventArgs e)
+        {
+            bool isChecked1 = c1.Checked;
+            bool isChecked2 = c2.Checked;
+            if (isChecked1 && !isChecked2)
+            {
+                this.BackColor = Color.White;
+                this.ForeColor = Color.Black;
+                btn.ForeColor = Color.Black;
+                lbl.ForeColor = Color.Black;
+            }
+            else if (isChecked2 && !isChecked1)
+            {
+                this.BackColor = Color.Black;
+                this.ForeColor = Color.White;
+                btn.ForeColor = Color.White;
+                lbl.ForeColor = Color.Black;
+            }
+            else if (isChecked1 && isChecked2)
+            {
+                this.BackColor = Color.Gray;
+                this.ForeColor = Color.Blue;
+                btn.ForeColor = Color.Blue;
+                lbl.ForeColor = Color.Blue;
+            }
+            else
+            {
+                this.BackColor = SystemColors.Control;
+                this.ForeColor = SystemColors.ControlText;
+                btn.ForeColor = SystemColors.ControlText;
+                lbl.ForeColor = SystemColors.ControlText;
+            }
+        }
+
+        private void Text_Box_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+
+                DialogResult result = MessageBox.Show("Kas sa oled kindel?", "Küsimus", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes) { this.Text = txt.Text; }
+            }
+
         }
 
         private void RadioButtons_Changed(object? sender, EventArgs e)
         {
-            
+            if(r1.Checked) { this.BackColor = Color.Purple; }
+            else if(r2.Checked) { this.BackColor = Color.Red;}
         }
 
         private void Tree_AfterSelect(object? sender, TreeViewEventArgs e)
@@ -91,22 +148,43 @@ namespace formid
 
 
             //throw new NotImplementedException();
-            if (e.Node.Text == "Nupp-Button")
+            if (e.Node.Text == "Nupp-Button" )
             {
-                this.Controls.Add(btn);
+                if (btn.Visible)
+                {
+                    btn.Visible = false;
+                }
+                else { btn.Visible = true; }
+                
             }
             else if (e.Node.Text == "Silt-Label")
             {
-                this.Controls.Add(lbl);
+                if (lbl.Visible)
+                {
+                    lbl.Visible = false;
+                }
+                else { lbl.Visible = true; }
             }
             else if (e.Node.Text == "tekstik")
             {
-                this.Controls.Add(txt);
+                if (txt.Visible)
+                {
+                    txt.Visible = false;
+                }
+                else { txt.Visible = true; }
             }
             else if (e.Node.Text== "Radionupp")
             {
-                this.Controls.Add(r1);
-                this.Controls.Add(r2);
+                if (r1.Visible == true)
+                {
+                    r1.Visible = false;
+                    r2.Visible = false;
+                }
+                else if (r2.Visible == false)
+                {
+                    r1.Visible = true;
+                    r2.Visible = true;
+                }
             }
         }
 
@@ -155,6 +233,10 @@ namespace formid
                 r1.Visible = true;
                 r2.Visible = true;
             }
+            if (c1.Visible) { c1.Visible = false; }
+            else { c1.Visible = true; }
+            if (c2.Visible) { c2.Visible = false; }
+            
         }
        
     }
