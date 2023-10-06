@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,10 @@ namespace formid
         TreeView tree;
         Button btn;
         Label lbl;
-
+        TextBox txt;
+        RadioButton r1, r2;
+        CheckBox c1, c2;
+        PictureBox pb;
         public TreeForm()
         {
             this.Height = 600;
@@ -30,10 +34,10 @@ namespace formid
             btn.Location = new Point(150, 50);
             btn.Click += Btn_Click;
             btn.MouseHover += button2_MouseHover;
+            btn.Visible = false;
             tree.MouseDoubleClick += button_MouseDOubleClick;
 
-
-            tree.Nodes.Add(new TreeNode("Silt-Label"));
+            treeNode.Nodes.Add(new TreeNode("Silt-Label"));
             lbl = new Label();
             lbl.Text = "Pealkiri";
             lbl.Location = new Point(tree.Width, 0);
@@ -41,10 +45,32 @@ namespace formid
             lbl.BackColor= Color.LightGray;
             lbl.BorderStyle= BorderStyle.Fixed3D;
             lbl.Font = new Font("Tahoma", 24);
-            tree.Nodes.Add(treeNode);
+            lbl.Visible = false;
+            treeNode.Nodes.Add(new TreeNode("tekstik"));
             this.Controls.Add(tree);
-
-
+            txt = new TextBox();
+            txt.BorderStyle = BorderStyle.Fixed3D;
+            txt.Height = 50;
+            txt.Width = 100;
+            txt.Text = "...";
+            txt.Visible = false;
+            txt.Location = new Point(tree.Width, btn.Top + btn.Height + 5);
+            this.Controls.Add(txt);
+            txt.Visible = false;
+            treeNode.Nodes.Add(new TreeNode("Radionupp"));
+            r1 = new RadioButton();
+            r1.Text = "VAlik";
+            r1.Visible = false;
+            r1.Location = new Point(tree.Width, txt.Location.Y + txt.Height);
+            r2 = new RadioButton();
+            r2.Text = "valik2";
+            r2.Visible = false;
+            r2.Location = new Point(r1.Location.X + r1.Width, txt.Location.Y + txt.Height);
+            r1.CheckedChanged += new EventHandler(RadioButtons_Changed);
+            r2.CheckedChanged += new EventHandler(RadioButtons_Changed);
+            this.Controls.Add(r1);
+            this.Controls.Add(r2);
+                
 
 
             tree.Nodes.Add(treeNode);
@@ -52,10 +78,18 @@ namespace formid
             this.Controls.Add(btn);
             this.Controls.Add(lbl);
             
+            
+        }
+
+        private void RadioButtons_Changed(object? sender, EventArgs e)
+        {
+            
         }
 
         private void Tree_AfterSelect(object? sender, TreeViewEventArgs e)
         {
+
+
             //throw new NotImplementedException();
             if (e.Node.Text == "Nupp-Button")
             {
@@ -64,6 +98,15 @@ namespace formid
             else if (e.Node.Text == "Silt-Label")
             {
                 this.Controls.Add(lbl);
+            }
+            else if (e.Node.Text == "tekstik")
+            {
+                this.Controls.Add(txt);
+            }
+            else if (e.Node.Text== "Radionupp")
+            {
+                this.Controls.Add(r1);
+                this.Controls.Add(r2);
             }
         }
 
@@ -94,6 +137,25 @@ namespace formid
                 lbl.Visible = false;
             }
             else { lbl.Visible = true; }
+
+
+            if (txt.Visible)
+            {
+                txt.Visible = false;
+            }
+            else { txt.Visible = true; }
+
+            if (r1.Visible == true)
+            {
+                r1.Visible = false;
+                r2.Visible = false;
+            }
+            else if(r2.Visible == false)
+            {
+                r1.Visible = true;
+                r2.Visible = true;
+            }
         }
+       
     }
 }
