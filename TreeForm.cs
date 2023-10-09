@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,12 +12,13 @@ namespace formid
     public partial class TreeForm: Form
     {
         TreeView tree;
-        Button btn;
+        Button btn, btn2;
         Label lbl;
         TextBox txt;
         RadioButton r1, r2;
         CheckBox c1, c2;
         PictureBox pb;
+        ListBox lb;
         public TreeForm()
         {
             this.Height = 600;
@@ -74,13 +77,50 @@ namespace formid
             this.Controls.Add(r2);
             treeNode.Nodes.Add(new TreeNode("CheckBox"));
             c1 = new CheckBox();
+            c1.Visible= true;
             c1.Text = "Valik 1.1";
             c1.Location = new Point(tree.Width, r1.Top + r1.Height + 5);
             c1.CheckedChanged += new EventHandler(CheckBoxes_Changed);
             c2 = new CheckBox();
+            c2.Visible= true;
             c2.Text = "Valik 2.2";
             c2.Location = new Point(c1.Location.X + c1.Width, r1.Top + r1.Height + 5);
             c1.CheckedChanged += new EventHandler(CheckBoxes_Changed);
+            pb=new PictureBox();
+            pb.Location = new Point(tree.Width, c2.Location.Y + c2.Height + 5);
+            pb.Image = new Bitmap("../../../msg1021801730-104019.jpg");
+            pb.Size = new Size(100, 100);
+            pb.SizeMode= PictureBoxSizeMode.Zoom;
+            pb.BorderStyle= BorderStyle.Fixed3D;
+            this.Controls.Add(pb);
+            lb = new ListBox();
+            lb.Items.Add("Roheline");
+            lb.Items.Add("Sinine");
+            lb.Items.Add("Hall");
+            lb.Items.Add("Kollane");
+            lb.Location = new Point(tree.Width, pb.Location.Y + pb.Height);
+            this.Controls.Add(lb);
+            lb.Visible = true;
+            btn2 = new Button();
+            btn2.Height = 50;
+            btn2.Width= 100;
+            btn2.Location = new Point(lb.Left, lb.Bottom);
+            btn2.Visible = true;
+            btn2.Click += btn2_Click;
+            treeNode.Nodes.Add(new TreeNode("DataGridView"));
+            DataSet ds = new DataSet("XML fail. Menüü");
+            DataGridView dataGrid = new DataGridView();
+            ds.ReadXml(@"..\..\..\Uus tekstidokument.xml");
+            dataGrid.Location = new Point(tree.Width + pb.Width, pb.Location.Y);
+            dataGrid.Height = 200;
+            dataGrid.Width= 300;
+            dataGrid.DataSource= ds;
+            dataGrid.AutoGenerateColumns= true;
+            dataGrid.DataMember = "Food";
+            this.Controls.Add(dataGrid);
+            dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+
 
 
             tree.Nodes.Add(treeNode);
@@ -89,9 +129,33 @@ namespace formid
             this.Controls.Add(lbl);
             this.Controls.Add(c1);
             this.Controls.Add(c2);
-            
-        }
+            this.Controls.Add(btn2);
 
+        }
+        private void lb_keyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Delete)
+            {
+                if (lb.SelectedItems != null)
+                {
+                    lb.Items.Remove(lb.SelectedItems);
+                    if (lb.Items.Count < 9)
+                    {
+                        lb.Height -= 20;
+                        lb.Height += 20;
+                        btn2.Location = new Point(lb.Left, lb.Bottom);
+                    }
+                }
+            }
+        }
+        private void btn2_Click(object sender, EventArgs e)
+        {
+            string tekst = Interaction.InputBox("lsia uus väli", "Pealkiri muutmine", "väli");
+            if(tekst.Length>0 && !lb.Items.Contains(tekst))
+            {
+                lb.Items.Add(tekst);
+            }
+        }
         private void CheckBoxes_Changed(object? sender, EventArgs e)
         {
             bool isChecked1 = c1.Checked;
@@ -132,7 +196,14 @@ namespace formid
             {
 
                 DialogResult result = MessageBox.Show("Kas sa oled kindel?", "Küsimus", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes) { this.Text = txt.Text; }
+                if (result == DialogResult.Yes) {
+                    txt.Enabled = false;
+                    this.Text = txt.Text; }
+                else
+                {
+                    string tekst = Interaction.InputBox("Sissesta pealkiri", "Pealkiri muutmine", "Uus pealkiri");
+                    this.Text = tekst;
+                }
             }
 
         }
@@ -185,7 +256,22 @@ namespace formid
                     r1.Visible = true;
                     r2.Visible = true;
                 }
+                
             }
+            else if (e.Node.Text== "CheckBox")
+            {
+                if (c1.Visible == false)
+                {
+                    c1.Visible = true;
+                    c2.Visible= true;
+                }
+                else if (c2.Visible == false)
+                {
+                    c1.Visible = true;
+                    c2.Visible = true;
+                }
+            }
+           
         }
 
         private void Btn_Click(object sender, EventArgs e)
@@ -238,6 +324,7 @@ namespace formid
             if (c2.Visible) { c2.Visible = false; }
             
         }
+        
        
     }
 }
