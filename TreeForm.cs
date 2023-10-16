@@ -12,13 +12,14 @@ namespace formid
     public partial class TreeForm: Form
     {
         TreeView tree;
-        Button btn, btn2;
+        Button btn, btn2, btn3;
         Label lbl;
         TextBox txt;
         RadioButton r1, r2;
         CheckBox c1, c2;
         PictureBox pb;
         ListBox lb;
+        
         public TreeForm()
         {
             this.Height = 600;
@@ -40,6 +41,10 @@ namespace formid
             btn.MouseHover += button2_MouseHover;
             btn.Visible = false;
             tree.MouseDoubleClick += button_MouseDOubleClick;
+            treeNode.Nodes.Add(new TreeNode("kolmnurk"));
+            new KolmnurkForm().Show();
+
+
 
             treeNode.Nodes.Add(new TreeNode("Silt-Label"));
             lbl = new Label();
@@ -107,6 +112,15 @@ namespace formid
             btn2.Location = new Point(lb.Left, lb.Bottom);
             btn2.Visible = true;
             btn2.Click += btn2_Click;
+            btn3= new Button();
+            btn3.Height = 50;
+            btn3.Width= 100;
+            btn3.Text = "kustuta";
+            btn3.Location = new Point(lb.Left, btn2.Bottom);
+            btn3.Visible = true;
+            btn3.Click += btn3_Click;
+
+
             treeNode.Nodes.Add(new TreeNode("DataGridView"));
             DataSet ds = new DataSet("XML fail. Menüü");
             DataGridView dataGrid = new DataGridView();
@@ -132,21 +146,19 @@ namespace formid
             this.Controls.Add(btn2);
 
         }
-        private void lb_keyDown(object sender, KeyEventArgs e)
+        private void btn3_Click(object? sender, EventArgs e)
         {
-            if(e.KeyCode == Keys.Delete)
+            
+            if (lb.SelectedItems != null)
             {
-                if (lb.SelectedItems != null)
-                {
-                    lb.Items.Remove(lb.SelectedItems);
-                    if (lb.Items.Count < 9)
-                    {
-                        lb.Height -= 20;
-                        lb.Height += 20;
-                        btn2.Location = new Point(lb.Left, lb.Bottom);
-                    }
-                }
+                lb.Items.Remove(lb.SelectedItems);
+                lb.Height -= 20;
+                lb.Height += 20;
+                btn2.Location = new Point(lb.Left, lb.Bottom);
+                btn3.Location = new Point(lb.Left, btn2.Bottom);
+                
             }
+            
         }
         private void btn2_Click(object sender, EventArgs e)
         {
