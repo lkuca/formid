@@ -16,6 +16,7 @@ namespace formid
         ListView ListViewkolmnurkList;
         Button btn;
         TextBox txt,txt1,txt2;
+        
         public KolmnurkForm()
         {
 
@@ -60,6 +61,8 @@ namespace formid
             txt2.Location = new Point(150,txt1.Bottom);
             txt2.Visible= true;
             this.Controls.Add(txt2);
+            
+            
 
 
         }
@@ -86,9 +89,25 @@ namespace formid
             if (triangle.ExistTriangle) { ListViewkolmnurkList.Items[5].SubItems.Add("on"); }
             else ListViewkolmnurkList.Items[5].SubItems.Add("ei ole");
         }
+        private void kolmnugatuup(object? sender, EventArgs e)
+        {
+            double A, B, C;
+            A = Convert.ToDouble(txt.Text);
+            B = Convert.ToDouble(txt1.Text);
+            C = Convert.ToDouble(txt2.Text);
+            Triangle triangle = new Triangle(A, B, C);
+            if (A == B)
+            {
+                PictureBox pb = new PictureBox();
+                pb.Image = Image.FromFile("../../../võrdhaarne.png");
+                pb.Location = new Point(50, 300);
+                pb.Size = new Size(500, 500);
+                this.Controls.Add(pb);
+            }
+        }
 
-        
-        
+
+
     }
     
 }
