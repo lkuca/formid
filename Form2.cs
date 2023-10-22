@@ -1,24 +1,22 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Text;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace formid
 {
-    public partial class KolmnurkForm: Form
+    public partial class Form2 : Form
     {
         TreeView kolmnurk;
         ListView ListViewkolmnurkList;
-        Button btn,btn1;
-        TextBox txt,txt1,txt2;
+        Button btn;
+        TextBox txt, txt1, txt2;
         PictureBox pb;
 
-        public KolmnurkForm()
+        
+
+        public Form2()
         {
 
 
@@ -30,9 +28,11 @@ namespace formid
             kolmnurk.Dock = DockStyle.Left;
             kolmnurk.BorderStyle = BorderStyle.Fixed3D;
             ListViewkolmnurkList = new ListView();
-            ListViewkolmnurkList.Height= 400;
-            ListViewkolmnurkList.Width= 500;
+            ListViewkolmnurkList.Height = 400;
+            ListViewkolmnurkList.Width = 500;
             ListViewkolmnurkList.Columns.Add("väli", 50);
+            ListViewkolmnurkList.BackColor = Color.Black;
+            ListViewkolmnurkList.ForeColor= Color.GreenYellow;
             ListViewkolmnurkList.Columns.Add("tähtsus", 50);
             ListViewkolmnurkList.View = View.Details;
             this.Controls.Add(ListViewkolmnurkList);
@@ -44,38 +44,38 @@ namespace formid
             btn.Click += Btn_Click;
             btn.Visible = true;
             this.Controls.Add(btn);
-            btn1 = new Button();
-            btn1.Height = 40;
-            btn1.Width = 100;
-            btn1.Text = "Start";
-            btn1.Location = new Point(300, ListViewkolmnurkList.Bottom);
-            btn1.Click += Btn_Click1;
-            btn1.Visible = true;
-            this.Controls.Add(btn1);
             txt = new TextBox();
             txt.Height = 40;
             txt.Width = 100;
-            txt.Location= new Point(150,btn.Bottom);
-            txt.Visible= true;
+            txt.Location = new Point(150, btn.Bottom);
+            txt.BackColor= Color.Black;
+            txt.ForeColor = Color.GreenYellow;
+            txt.Visible = true;
             this.Controls.Add(txt);
             txt1 = new TextBox();
             txt1.Height = 40;
             txt1.Width = 100;
             txt1.Location = new Point(150, txt.Bottom);
-            txt1.Visible= true;
+            txt1.BackColor = Color.Black;
+            txt1.ForeColor = Color.GreenYellow;
+            txt1.Visible = true;
             this.Controls.Add(txt1);
             txt2 = new TextBox();
             txt2.Height = 40;
             txt2.Width = 100;
-            txt2.Location = new Point(150,txt1.Bottom);
-            txt2.Visible= true;
+            txt2.BackColor = Color.Black;
+            txt2.ForeColor= Color.GreenYellow;
+            txt2.Location = new Point(150, txt1.Bottom);
+            txt2.Visible = true;
             this.Controls.Add(txt2);
             pb = new PictureBox();
             //pb.Image = new Bitmap("../../../vordhaarne.png");
             pb.Location = new Point(kolmnurk.Width, txt2.Location.Y + txt2.Height + 5);
             pb.Size = new Size(200, 200);
-            pb.Visible = true;
+            pb.Visible = false;
             this.Controls.Add(pb);
+            Image myimage = new Bitmap(@"../../../crimenet.jpg");
+            this.BackgroundImage = myimage;
 
 
 
@@ -106,29 +106,23 @@ namespace formid
             {
                 ListViewkolmnurkList.Items[6].SubItems.Add("võrdhaarne");
                 pb.Image = new Bitmap("../../../vordhaarne.png");
-                
+                pb.Visible= true;
+
             }
             else if (A == C)
             {
                 ListViewkolmnurkList.Items[6].SubItems.Add("võrdkülgne");
                 pb.Image = new Bitmap("../../../vordkulgne.png");
-                
+                pb.Visible = true;
             }
             else
             {
                 ListViewkolmnurkList.Items[6].SubItems.Add("erikulgne");
                 pb.Image = new Bitmap("../../../erikulgne.png");
-                
+                pb.Visible = true;
             }
-            
-        }
-        private void Btn_Click1(object? sender, EventArgs e)
-        {
-            Form2 form2 = new Form2();
-            form2.Show();
-        }
 
-
+        }
+        
     }
-    
 }

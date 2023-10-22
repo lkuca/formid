@@ -42,7 +42,7 @@ namespace formid
             btn.Visible = false;
             tree.MouseDoubleClick += button_MouseDOubleClick;
             treeNode.Nodes.Add(new TreeNode("kolmnurk"));
-            new KolmnurkForm().Show();
+            //new KolmnurkForm().Show();
 
 
 
@@ -112,13 +112,14 @@ namespace formid
             btn2.Location = new Point(lb.Left, lb.Bottom);
             btn2.Visible = true;
             btn2.Click += btn2_Click;
-            btn3= new Button();
-            btn3.Height = 50;
-            btn3.Width= 100;
-            btn3.Text = "kustuta";
-            btn3.Location = new Point(lb.Left, btn2.Bottom);
-            btn3.Visible = true;
-            btn3.Click += btn3_Click;
+            //btn3= new Button();
+            //btn3.Height = 50;
+            //btn3.Width= 100;
+            //btn3.Text = "kustuta";
+            //btn3.Location = new Point(150, btn2.Bottom);
+            //btn3.Visible = true;
+            //btn3.Click += btn3_Click;
+            lb.KeyDown += Lb_KeyDown;
 
 
             treeNode.Nodes.Add(new TreeNode("DataGridView"));
@@ -144,21 +145,38 @@ namespace formid
             this.Controls.Add(c1);
             this.Controls.Add(c2);
             this.Controls.Add(btn2);
+            this.Controls.Add(btn3);
 
         }
-        private void btn3_Click(object? sender, EventArgs e)
+        //private void btn3_Click(object? sender, EventArgs e)
+        //{
+
+        //    if (lb.SelectedItems != null)
+        //    {
+        //        lb.Items.Remove(lb.SelectedItems);
+        //        lb.Height -= 20;
+        //        lb.Height += 20;
+        //        //btn2.Location = new Point(lb.Left, lb.Bottom);
+        //        //btn3.Location = new Point(lb.Left, btn2.Bottom);
+
+        //    }
+
+        //}
+        private void Lb_KeyDown(object? sender, KeyEventArgs e)
         {
-            
-            if (lb.SelectedItems != null)
+            if (e.KeyCode == Keys.Delete)
             {
-                lb.Items.Remove(lb.SelectedItems);
-                lb.Height -= 20;
-                lb.Height += 20;
-                btn2.Location = new Point(lb.Left, lb.Bottom);
-                btn3.Location = new Point(lb.Left, btn2.Bottom);
-                
+                if (lb.SelectedItem != null)
+                {
+                    lb.Items.Remove(lb.SelectedItem);
+                    if (lb.Items.Count < 7)
+                    {
+                        lb.Height -= 20;
+                        lb.Height += 20;
+                        btn2.Location = new Point(lb.Left, lb.Bottom);
+                    }
+                }
             }
-            
         }
         private void btn2_Click(object sender, EventArgs e)
         {
@@ -282,6 +300,10 @@ namespace formid
                     c1.Visible = true;
                     c2.Visible = true;
                 }
+            }
+            else if (e.Node.Text== "kolmnurk")
+            {
+                new KolmnurkForm().Show();
             }
            
         }
