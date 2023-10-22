@@ -95,11 +95,19 @@ namespace formid
             ListViewkolmnurkList.Items.Add("Pindala");
             ListViewkolmnurkList.Items.Add("on?");
             ListViewkolmnurkList.Items.Add("specificator");
+            ListViewkolmnurkList.Items.Add("korgus");
+            ListViewkolmnurkList.Items.Add("medianA");
+            ListViewkolmnurkList.Items.Add("medianB");
+            ListViewkolmnurkList.Items.Add("medianC");
             ListViewkolmnurkList.Items[0].SubItems.Add(triangle.outputa());
             ListViewkolmnurkList.Items[1].SubItems.Add(triangle.outputb());
             ListViewkolmnurkList.Items[2].SubItems.Add(triangle.outputc());
             ListViewkolmnurkList.Items[3].SubItems.Add(Convert.ToString(triangle.Perimeter()));
             ListViewkolmnurkList.Items[4].SubItems.Add(Convert.ToString(triangle.Surface()));
+            ListViewkolmnurkList.Items[7].SubItems.Add(Convert.ToString(triangle.Getkorgus()));
+            ListViewkolmnurkList.Items[8].SubItems.Add(Convert.ToString(triangle.Getkorgus()));
+            ListViewkolmnurkList.Items[9].SubItems.Add(Convert.ToString(triangle.Getkorgus()));
+            ListViewkolmnurkList.Items[10].SubItems.Add(Convert.ToString(triangle.Getkorgus()));
             if (triangle.ExistTriangle) { ListViewkolmnurkList.Items[5].SubItems.Add("on"); }
             else ListViewkolmnurkList.Items[5].SubItems.Add("ei ole");
             if (A == B || B == C)

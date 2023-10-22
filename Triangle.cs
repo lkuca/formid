@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace formid
 {
 
@@ -81,7 +82,7 @@ namespace formid
                 if ((a < b + c)&&(b<a +c)&&(c< a+ b)) return true;else return false;
             }
         }
-        public double GetHeight()
+        public double Getkorgus()
         {
             if (ExistTriangle)
             {
@@ -93,6 +94,33 @@ namespace formid
             else { return 0; }
             
         }
+        public double GetMediaanA()
+        {   
+            
+           double ma = Math.Sqrt(2 * b * b + 2 * c * c - a * a);
+           double maa = 1 / 2 * (ma);
+            return (int) maa;
+            
+
+        }
+        public double GetMediaanB()
+        {
+
+            double mb = Math.Sqrt(2 * a * a + 2 * c * c - b * b);
+            double mbb = 1 / 2 * (mb);
+            return (int) mbb;
+
+
+        }
+        public double GetMediaanC()
+        {
+
+            double mc = Math.Sqrt(2 * a * a + 2 * b * b - c * c);
+            double mcc = 1 / 2 * (mc);
+            return (int) mcc;
+
+        }
+
 
     }
     
